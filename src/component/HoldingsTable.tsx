@@ -29,9 +29,13 @@ export default function HoldingsTable() {
     day_change: "-14.24",
     day_change_perc: "-3.82",
   }]);
-  useEffect(() => {
-    updateRows();
-  }, [sheets]);
+  useEffect(()=>{
+    updateRows()
+    const interval=setInterval(()=>{
+      updateRows()
+     },10000)
+     return()=>clearInterval(interval)
+  },[]);
   function updateRows() {
     const rows = driveClient.getRows(sheets);
     if (rows) {
@@ -67,8 +71,8 @@ export default function HoldingsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.filter(r => r).map((row) => (
-            <TableRow key={row.symbol}>
+          {rows.filter(r => r).map((row, index) => (
+            <TableRow key={index}>
               <TableCell component="th" scope="row">{row.symbol}</TableCell>
               <TableCell align="left">{row.holding}</TableCell>
               <TableCell align="left">{row.shares}</TableCell>

@@ -5,8 +5,14 @@ import App from './App';
 import driveClient from './utils/driveClient';
 
 async function init() {
-  await driveClient.update();
+  const promise = driveClient.update();
+  const answer = prompt("Enter PIN");
+  if (answer !== "119") {
+    alert("Unauthorized!");
+    return;
+  }
 
+  await promise;
   ReactDOM.render(
     <React.StrictMode>
       <App />

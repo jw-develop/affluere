@@ -30,9 +30,6 @@ function formatNumber(x: string, format = Format.NORMAL) {
 class DriveClient {
     sheets: {[key: string]: HoldingRow[]} = {};
     initialized = false;
-    constructor() {
-        this.update();
-    }
 
     getRows(sheetNames: string[]) {
         return sheetNames.reduce((acc, curr) => acc.concat(this.sheets[curr]), [] as HoldingRow[]);
