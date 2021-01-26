@@ -1,5 +1,5 @@
 
-import HoldingsTable from './component/HoldingsTable';
+import HoldingsTable from './containers/HoldingsTable';
 import React from 'react';
 import './App.css';
 

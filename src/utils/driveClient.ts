@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { HoldingRow } from '../component/HoldingsTable';
+import { HoldingRow } from '../containers/HoldingsTable';
 
 const scriptAddress = 'https://script.google.com/macros/s/AKfycbxcvZ1EHvgmm5Hqlm496clU9FmyaYHHd4zLBWrr9WdL3E4C-UQfjf2FXw/exec';
 
@@ -11,20 +11,6 @@ async function query(method: string) {
             method
         })
     })).json();
-}
-
-enum Format {
-    NORMAL,
-    DOLLAR,
-    PERCENT
-}
-function formatNumber(x: string, format = Format.NORMAL) {
-    if (!x) return "";
-    switch (format) {
-        case (Format.NORMAL): return parseFloat(x).toFixed(0);
-        case (Format.DOLLAR): return "$ " + parseFloat(x).toFixed(2);
-        case (Format.PERCENT): return `${(parseFloat(x) * 100).toFixed(2)}%`;
-    }
 }
 
 class DriveClient {
@@ -48,13 +34,13 @@ class DriveClient {
                 rows.push({
                     symbol: words[0],
                     holding: words[1],
-                    shares: formatNumber(words[2]),
-                    price: formatNumber(words[4], Format.DOLLAR),
-                    value_current: formatNumber(words[5], Format.DOLLAR),
-                    total_change: formatNumber(words[6], Format.DOLLAR),
-                    total_perc: formatNumber(words[7], Format.PERCENT),
-                    day_change: formatNumber(words[9], Format.DOLLAR),
-                    day_change_perc: formatNumber(words[10], Format.PERCENT),
+                    shares: words[2],
+                    price: words[4],
+                    value_current: words[5],
+                    total_change: words[6],
+                    total_perc: words[7],
+                    day_change: words[9],
+                    day_change_perc: words[10],
                 });
             }
             this.sheets[sheetName] = rows;
